@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\nayni\\Desktop\\tamiest\\tamiest\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0EA7926A-49D5-4F70-AF3A-E0E6E4CC5F63}|tamiest\\tamiest.vcxproj|C:\\Users\\nayni\\Desktop\\tamiest\\tamiest\\tamiest\\tamiest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{0EA7926A-49D5-4F70-AF3A-E0E6E4CC5F63}|tamiest\\tamiest.vcxproj|solutionrelative:tamiest\\tamiest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "tamiest.cpp",
+              "DocumentMoniker": "C:\\Users\\nayni\\Desktop\\tamiest\\tamiest\\tamiest\\tamiest.cpp",
+              "RelativeDocumentMoniker": "tamiest\\tamiest.cpp",
+              "ToolTip": "C:\\Users\\nayni\\Desktop\\tamiest\\tamiest\\tamiest\\tamiest.cpp",
+              "RelativeToolTip": "tamiest\\tamiest.cpp",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-02-14T21:01:32.796Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
