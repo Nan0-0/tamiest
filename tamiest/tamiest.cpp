@@ -3,9 +3,75 @@
 
 #include <iostream>
 
+
+enum class Mood {
+    SAD,
+    HAPPY,
+    EXCITED,
+    UNEASY
+};
+enum class Action {
+    FEED,
+    PLAY,
+    WALK,
+    TEACH_TRICKS,
+    CLEAN_UP,
+    GIVE_MEDICINE,
+    ATTEND_TO_ATTENTION,
+   
+};
+
+class Tamagorchi {
+private:
+    int age;
+    int hungerLevel;
+    int happinessLevel;
+    bool isSick;
+    bool isAsleep;
+
+public:
+    Tamagorchi();
+    void wakeUp();
+    void performAction(Action);
+    void checkStatus();
+    void aging();
+    void updateMood(Mood);
+    void timerFunction();
+    void handleRandomEvent();
+
+};
+
+Tamagorchi::Tamagorchi() {
+    age = 0;
+    hungerLevel = 0;
+    happinessLevel = 0;
+    isSick = false;
+    isAsleep = true;
+}
+
+void Tamagorchi::wakeUp() {
+    std:: cout << " Tama is waking up.";
+    isAsleep = false;
+}
+
+void Tamagorchi::checkStatus() {
+    std::cout << "Checking tama stats...";
+    std:: cout << "Age:" << age << " Hunger: " << hungerLevel << " Happiness: " << happinessLevel;
+    if (isSick)
+        std::cout << "Tama sick :^[";
+    if (isAsleep)
+        std::cout << "Tama is asleep";
+
+}
+
+
+
 int main()
 {
-    std::cout << "Hello World!\n";
+    Tamagorchi myTamagorchi;
+    myTamagorchi.wakeUp();
+    myTamagorchi.checkStatus();
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

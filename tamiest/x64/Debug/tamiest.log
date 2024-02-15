@@ -1,1 +1,3 @@
-﻿  tamiest.vcxproj -> C:\Users\nayni\Desktop\tamiest\tamiest\x64\Debug\tamiest.exe
+﻿  tamiest.cpp
+C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(59,1): warning C4102: 'std': unreferenced label
+  tamiest.vcxproj -> C:\Users\nayni\Desktop\tamiest\tamiest\x64\Debug\tamiest.exe
