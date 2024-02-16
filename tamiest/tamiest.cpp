@@ -2,6 +2,8 @@
 //
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 
 enum class Mood {
@@ -32,10 +34,10 @@ private:
 public:
     Tamagorchi();
     void wakeUp();
-    void performAction(Action);
+    void performAction(Action action);
     void checkStatus();
     void aging();
-    void updateMood(Mood);
+    void updateMood(Mood mood);
     void timerFunction();
     void handleRandomEvent();
 
@@ -52,6 +54,7 @@ Tamagorchi::Tamagorchi() {
 void Tamagorchi::wakeUp() {
     std:: cout << " Tama is waking up.";
     isAsleep = false;
+    age++;
 }
 
 void Tamagorchi::checkStatus() {
@@ -64,13 +67,82 @@ void Tamagorchi::checkStatus() {
 
 }
 
+void Tamagorchi::performAction(Action action) {
+    switch (action) {
+        case Action::FEED:
+            std::cout << "tama is being fed";
+            hungerLevel--;
+            updateMood(Mood::HAPPY);
+            break;
+        case Action::PLAY:
+            std::cout << "playing with tama";
+            happinessLevel++;
+            // update mood smth smth
+
+    }
+}
+
+void Tamagorchi::updateMood(Mood mood) {
+    switch (mood) {
+        case Mood:: HAPPY:
+            std::cout << "Happy tama";
+                break;
+        case Mood:: SAD:
+            std::cout << "Sad tama";
+                break;
+                // others.
+        default:
+            break;
+    }
+}
+
+void Tamagorchi::aging() {
+    age++;
+    if (age % 5 == 0) {
+        std::cout << "Tama ages up!";
+
+    }
+    if (age % 10 == 0) {
+        std::cout << "Tama not feeling well!";
+        isSick = true;
+    }
+
+}
+
+void Tamagorchi::timerFunction() {
+    if (isAsleep) {
+        aging();
+
+    }
+    handleRandomEvent();
+}
+
+void Tamagorchi::handleRandomEvent() {
+    srand(time(0));
+    int randomEvent = rand() % 10;
+
+    switch (randomEvent) {
+        case 0:
+            std::cout << "unexpect! tama feels uneasy";
+            updateMood(Mood::UNEASY);
+            break;
+        case 1:
+            std:: cout << "Vistors from another planet! tama is excited";
+            updateMood(Mood::EXCITED);
+            break;
+        default:
+            break;
+    }
+
+}
 
 
-int main()
-{
+int main() {
     Tamagorchi myTamagorchi;
     myTamagorchi.wakeUp();
     myTamagorchi.checkStatus();
+    myTamagorchi.performAction(Action::FEED);
+    myTamagorchi.performAction(Action::PLAY);
     return 0;
 }
 

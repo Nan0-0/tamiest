@@ -1,3 +1,3 @@
 ﻿  tamiest.cpp
-C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(59,1): warning C4102: 'std': unreferenced label
+C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(121,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   tamiest.vcxproj -> C:\Users\nayni\Desktop\tamiest\tamiest\x64\Debug\tamiest.exe
