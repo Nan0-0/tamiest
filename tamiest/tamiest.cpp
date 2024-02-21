@@ -70,7 +70,31 @@ void Tamagorchi::performAction(Action action) {
         happinessLevel++;
         updateMood(happinessLevel < 3 ? Mood::SAD : Mood::HAPPY);
         break;
-        // other actions 
+    case Action:: WALK:
+        std::cout << "Taking tama for a walk.";
+        happinessLevel += 2;
+        updateMood(happinessLevel < 3 ? Mood::SAD : Mood::HAPPY);
+        break;
+    case Action:: TEACH_TRICKS:
+        std::cout << "Cleaning up tama enviorment.";
+        happinessLevel += 3;
+        updateMood(happinessLevel < 3 ? Mood::SAD : Mood::HAPPY);
+        break;
+    case Action::CLEAN_UP:
+        std::cout << "Cleaning up tama enviorment.";
+        happinessLevel++;
+        updateMood(happinessLevel < 3 ? Mood::SAD : Mood::HAPPY);
+        break;
+    case Action::GIVE_MEDICINE:
+        std::cout << "Medicine given to tama.";
+        isSick = false;
+        updateMood(Mood::HAPPY);
+        break;
+    case Action::ATTEND_TO_ATTENTION:
+        std::cout << "attention given to tama.";
+        happinessLevel++;
+        updateMood(happinessLevel < 3 ? Mood::SAD : Mood::HAPPY);
+        break;
     default:
         std::cout << "Invalid action.";
         break;
@@ -80,10 +104,10 @@ void Tamagorchi::performAction(Action action) {
 void Tamagorchi::updateMood(Mood mood) {
     switch (mood) {
     case Mood::HAPPY:
-        std::cout << "Happy Tama \n";
+        std::cout << "\nHappy Tama \n";
         break;
     case Mood::SAD:
-        std::cout << "Sad Tama \n";
+        std::cout << "\nSad Tama \n";
         break;
         // other moods here
     default:
@@ -140,6 +164,11 @@ int main() {
         std::cout << "Choose an action for Tama: \n";
         std::cout << "1. Feed\n";
         std::cout << "2. Play\n";
+        std::cout << "3. Walk\n";
+        std::cout << "4. Teach Tricks\n";
+        std::cout << "5. Clean up\n";
+        std::cout << "6. Give Medicine\n";
+        std::cout << "7. Give Attention\n";
         std::cout << "0. Quit\n";
         std::cin >> choice;
 
@@ -150,7 +179,21 @@ int main() {
         case 2:
             myTamagorchi.performAction(Action::PLAY);
             break;
-            // Add other actions
+        case 3:
+            myTamagorchi.performAction(Action::WALK);
+            break;
+        case 4:
+            myTamagorchi.performAction(Action::TEACH_TRICKS);
+            break;
+        case 5:
+            myTamagorchi.performAction(Action::CLEAN_UP);
+            break;
+        case 6:
+            myTamagorchi.performAction(Action::GIVE_MEDICINE);
+            break;
+        case 7:
+            myTamagorchi.performAction(Action::ATTEND_TO_ATTENTION);
+            break;
         case 0:
             std::cout << "Exiting...\n";
             break;
