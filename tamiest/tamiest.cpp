@@ -12,6 +12,13 @@ enum class Mood {
     UNEASY
 };
 
+enum class TimePeriod {
+    MORNING,
+    AFTERNOON,
+    EVENING,
+    MIDNIGHT
+};
+
 enum class Action {
     FEED,
     PLAY,
@@ -39,6 +46,9 @@ public:
     void updateMood(Mood mood);
     void timerFunction();
     void handleRandomEvent();
+    void displayDeath();
+    void handleSeepingTime(int hour);
+    void sleep();
 };
 
 Tamagorchi::Tamagorchi() : age(0), hungerLevel(0), happinessLevel(0), isSick(false), isAsleep(true) {}
@@ -47,6 +57,9 @@ void Tamagorchi::wakeUp() {
     std::cout << " Tama is waking up.\n";
     isAsleep = false;
     age++;
+}
+void Tamagorchi::sleep() {
+
 }
 
 void Tamagorchi::checkStatus() {
