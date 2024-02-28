@@ -295,7 +295,7 @@ int main() {
             }
         } else if (hour >= 6 && hour < 8) {
             std::cout << "Midnight. Time for Tama to sleep.\n";
-            myTamagorchi.handleSleepingTime(hour);
+            myTamagorchi.handleSleepingTime(hour); //huhhhhhhhhhhhhhhhhhhhhhhhh
             myTamagorchi.sleep();
         }
 
