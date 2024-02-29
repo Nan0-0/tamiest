@@ -27,6 +27,7 @@ enum class Action {
     CLEAN_UP,
     GIVE_MEDICINE,
     ATTEND_TO_ATTENTION,
+    GO_TO_SLEEP
 };
 
 class Tamagorchi {
@@ -35,9 +36,11 @@ private:
     int hungerLevel;
     int happinessLevel;
     bool isSick;
-    bool isAsleep;
 
 public:
+    bool isAsleep;
+
+
     Tamagorchi();
     void wakeUp();
     void performAction(Action action);
@@ -64,7 +67,7 @@ void Tamagorchi::sleep() {
 }
 
 void Tamagorchi::handleSeepingTime(int hour) {
-    if ((hour >= 6 && hour < 8) && !isAsleep) {
+    if ((hour >= 6 && hour < 7) && !isAsleep) {
         std::cout << "It's midnight! Tama must sleep \n";
         displayDeath();
         exit(0);
@@ -120,6 +123,14 @@ void Tamagorchi::performAction(Action action) {
         std::cout << "attention given to tama.";
         happinessLevel++;
         updateMood(happinessLevel < 3 ? Mood::SAD : Mood::HAPPY);
+        break;
+    case Action::GO_TO_SLEEP: 
+        if (!isAsleep) {
+            sleep();
+        }
+        else {
+            std::cout << "Tama is already asleep \n";
+        }
         break;
     default:
         std::cout << "Invalid action.";
@@ -186,123 +197,76 @@ int main() {
     myTamagorchi.checkStatus();
 
     int choice;
+    int day = 1;
+    int hour = 0;
+
     for (int hour = 0; hour < 24; hour++) {
         if (hour >= 0 && hour < 2) {
-            std::cout << "Actions available. Choose an action:\n";
+            std::cout << "Morning actions available. Choose an action:\n";
             std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n";
-            std::cin >> choice;
-
-            switch (choice) {
-            case 1:
-                myTamagorchi.performAction(Action::FEED);
-                break;
-            case 2:
-                myTamagorchi.performAction(Action::PLAY);
-                break;
-            case 3:
-                myTamagorchi.performAction(Action::WALK);
-                break;
-            case 4:
-                myTamagorchi.performAction(Action::TEACH_TRICKS);
-                break;
-            case 5:
-                myTamagorchi.performAction(Action::CLEAN_UP);
-                break;
-            case 6:
-                myTamagorchi.performAction(Action::GIVE_MEDICINE);
-                break;
-            case 7:
-                myTamagorchi.performAction(Action::ATTEND_TO_ATTENTION);
-                break;
-            case 0:
-                std::cout << "Exiting...\n";
-                break;
-            default:
-                std::cout << "Invalid choice. Tama is upset.\n";
-                break;
-            }
         }
         else if (hour >= 2 && hour < 4) {
             std::cout << "Afternoon actions available. Choose an action:\n";
             std::cout << "1. Clean Up\n2. Give Medicine\n3. Attend to Attention\n";
-            std::cin >> choice;
-
-            switch (choice) {
-            case 1:
-                myTamagorchi.performAction(Action::FEED);
-                break;
-            case 2:
-                myTamagorchi.performAction(Action::PLAY);
-                break;
-            case 3:
-                myTamagorchi.performAction(Action::WALK);
-                break;
-            case 4:
-                myTamagorchi.performAction(Action::TEACH_TRICKS);
-                break;
-            case 5:
-                myTamagorchi.performAction(Action::CLEAN_UP);
-                break;
-            case 6:
-                myTamagorchi.performAction(Action::GIVE_MEDICINE);
-                break;
-            case 7:
-                myTamagorchi.performAction(Action::ATTEND_TO_ATTENTION);
-                break;
-            case 0:
-                std::cout << "Exiting...\n";
-                break;
-            default:
-                std::cout << "Invalid choice. Tama is upset.\n";
-                break;
-
-            }
         }
         else if (hour >= 4 && hour < 6) {
             std::cout << "Evening actions available. Choose an action:\n";
             std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n";
-            std::cin >> choice;
+        }
+        else if (hour >= 6 && hour < 8) {
+            std::cout << "Midnight. Choose an action:\n";
+            std::cout << "8. Go to Sleep\n";
+        }
 
-            switch (choice) {
-            case 1:
-                myTamagorchi.performAction(Action::FEED);
-                break;
-            case 2:
-                myTamagorchi.performAction(Action::PLAY);
-                break;
-            case 3:
-                myTamagorchi.performAction(Action::WALK);
-                break;
-            case 4:
-                myTamagorchi.performAction(Action::TEACH_TRICKS);
-                break;
-            case 5:
-                myTamagorchi.performAction(Action::CLEAN_UP);
-                break;
-            case 6:
-                myTamagorchi.performAction(Action::GIVE_MEDICINE);
-                break;
-            case 7:
-                myTamagorchi.performAction(Action::ATTEND_TO_ATTENTION);
-                break;
-            case 0:
-                std::cout << "Exiting...\n";
-                break;
-            default:
-                std::cout << "Invalid choice. Tama is upset.\n";
-                break;
+        int choice;
+        std::cin >> choice;
 
+        switch (choice) {
+        case 1:
+            myTamagorchi.performAction(Action::FEED);
+            break;
+        case 2:
+            myTamagorchi.performAction(Action::PLAY);
+            break;
+        case 3:
+            myTamagorchi.performAction(Action::WALK);
+            break;
+        case 4:
+            myTamagorchi.performAction(Action::TEACH_TRICKS);
+            break;
+        case 5:
+            myTamagorchi.performAction(Action::CLEAN_UP);
+            break;
+        case 6:
+            myTamagorchi.performAction(Action::GIVE_MEDICINE);
+            break;
+        case 7:
+            myTamagorchi.performAction(Action::ATTEND_TO_ATTENTION);
+            break;
+        case 8:
+            if (hour >= 6 && hour < 7) {
+                myTamagorchi.performAction(Action::GO_TO_SLEEP);
+                system("cls || clear");
+          
+                std::cout << "Starting a new day...\n";
+                day++;
+                hour = 0;
+                std::cout << "Day " << day << " . It's a new day! \n";
+                break;
             }
-        } else if (hour >= 6 && hour < 8) {
-            std::cout << "Midnight. Time for Tama to sleep.\n";
-            myTamagorchi.handleSleepingTime(hour); //huhhhhhhhhhhhhhhhhhhhhhhhh
-            myTamagorchi.sleep();
+            break;
+        case 0:
+            std::cout << "Exiting...\n";
+            break;
+        default:
+            std::cout << "Invalid choice. Tama is upset.\n";
+            break;
         }
 
         std::this_thread::sleep_for(std::chrono::seconds(1));
         std::cout << "Hour: " << hour << std::endl;
+        myTamagorchi.handleSeepingTime(hour);
 
-        myTamagorchi.aging();
     }
     return 0;
 }

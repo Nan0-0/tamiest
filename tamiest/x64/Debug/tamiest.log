@@ -1,3 +1,4 @@
 ﻿  tamiest.cpp
-C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(163,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(174,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(199,9): warning C4101: 'choice': unreferenced local variable
   tamiest.vcxproj -> C:\Users\nayni\Desktop\tamiest\tamiest\x64\Debug\tamiest.exe
