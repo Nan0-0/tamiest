@@ -1,4 +1,9 @@
 ﻿  tamiest.cpp
-C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(174,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(199,9): warning C4101: 'choice': unreferenced local variable
-  tamiest.vcxproj -> C:\Users\nayni\Desktop\tamiest\tamiest\x64\Debug\tamiest.exe
+C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(184,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(203,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(245,25): error C2248: 'Tamagorchi::cleanlinessLevel': cannot access private member declared in class 'Tamagorchi'
+  C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(39,9):
+  see declaration of 'Tamagorchi::cleanlinessLevel'
+  C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(33,7):
+  see declaration of 'Tamagorchi'
+  

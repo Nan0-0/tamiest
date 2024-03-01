@@ -36,6 +36,9 @@ private:
     int hungerLevel;
     int happinessLevel;
     bool isSick;
+    int cleanlinessLevel;
+    int cleanUpFailures; 
+
 
 public:
     bool isAsleep;
@@ -49,12 +52,18 @@ public:
     void updateMood(Mood mood);
     void timerFunction();
     void handleRandomEvent();
+    void handleRandomPoop();
     void displayDeath();
     void handleSeepingTime(int hour);
     void sleep();
+    int getCleanlinessLevel();
 };
 
-Tamagorchi::Tamagorchi() : age(0), hungerLevel(0), happinessLevel(0), isSick(false), isAsleep(true) {}
+Tamagorchi::Tamagorchi() : age(0), hungerLevel(0), happinessLevel(0), isSick(false), isAsleep(true), cleanlinessLevel(10) {}
+
+int Tamagorchi::getCleanlinessLevel() {
+    return cleanlinessLevel;
+}
 
 void Tamagorchi::wakeUp() {
     std::cout << " Tama is waking up.\n";
@@ -105,12 +114,13 @@ void Tamagorchi::performAction(Action action) {
         updateMood(happinessLevel < 3 ? Mood::SAD : Mood::HAPPY);
         break;
     case Action:: TEACH_TRICKS:
-        std::cout << "Cleaning up tama enviorment.";
+        std::cout << "Teaching tricks to tama.";
         happinessLevel += 3;
         updateMood(happinessLevel < 3 ? Mood::SAD : Mood::HAPPY);
         break;
     case Action::CLEAN_UP:
         std::cout << "Cleaning up tama enviorment.";
+        cleanlinessLevel += 2;
         happinessLevel++;
         updateMood(happinessLevel < 3 ? Mood::SAD : Mood::HAPPY);
         break;
@@ -189,6 +199,17 @@ void Tamagorchi::handleRandomEvent() {
     }
 }
 
+void Tamagorchi::handleRandomPoop() {
+    srand(time(0));
+    int randomEvent = rand() % 10;
+
+    if (randomEvent == 0) {
+        std::cout << "oh no! tama poop \n";
+        cleanlinessLevel -= 2;
+
+    }
+}
+
 
 int main() {
 
@@ -197,27 +218,35 @@ int main() {
     myTamagorchi.checkStatus();
 
     int choice;
+    std::cin >> choice;
     int day = 1;
     int hour = 0;
 
     for (int hour = 0; hour < 24; hour++) {
         if (hour >= 0 && hour < 2) {
+
             std::cout << "Morning actions available. Choose an action:\n";
-            std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n";
+            std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n5. Clean up 6. Give medicine 7. Give attention 8.Go to sleep";
         }
         else if (hour >= 2 && hour < 4) {
             std::cout << "Afternoon actions available. Choose an action:\n";
-            std::cout << "1. Clean Up\n2. Give Medicine\n3. Attend to Attention\n";
+            std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n5. Clean up 6. Give medicine 7. Give attention 8.Go to sleep";
         }
         else if (hour >= 4 && hour < 6) {
             std::cout << "Evening actions available. Choose an action:\n";
-            std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n";
+            std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n5. Clean up 6. Give medicine 7. Give attention 8.Go to sleep";
         }
         else if (hour >= 6 && hour < 8) {
             std::cout << "Midnight. Choose an action:\n";
             std::cout << "8. Go to Sleep\n";
         }
 
+        myTamagorchi.handleRandomPoop();
+        if (myTamagorchi.cleanlinessLevel <= 0) {
+            myTamagorchi.displayDeath();
+            std::cout << "Tama died due to neglect.\n";
+            exit(0);
+        }
         int choice;
         std::cin >> choice;
 
