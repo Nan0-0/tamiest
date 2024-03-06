@@ -4,6 +4,7 @@
 #include <thread> 
 #include <chrono> 
 #include <cstdlib>
+#include <string>
 
 enum class Mood {
     SAD,
@@ -38,9 +39,13 @@ private:
     bool isSick;
     int cleanlinessLevel;
     int cleanUpFailures; 
+    std::string name;
+    int uncleanedPoops;
 
 
 public:
+    Tamagorchi() : age(0), hungerLevel(0), happinessLevel(0), isSick(false), isAsleep(true), cleanlinessLevel(10) {}
+
     bool isAsleep;
 
 
@@ -56,14 +61,37 @@ public:
     void displayDeath();
     void handleSeepingTime(int hour);
     void sleep();
-    int getCleanlinessLevel();
+    int getCleanlinessLevel() const {
+        return cleanlinessLevel;
+    }
+
+    void setName(const std::string& newName) {
+        name = newName;
+    }
+
+    void cleanUpPoop() {
+        cleanlinessLevel += 2;
+        uncleanedPoops = 0;
+    }
+
+    void poopLeftUncleaned() {
+        uncleanedPoops++;
+        if (uncleanedPoops >= 5) {
+            isSick = true;
+            std::cout << "Tama is sick due to uncleaned poop! \n";
+
+        }
+
+        if (uncleanedPoops >= 10) {
+            std::cout << "Tama died due to neglect. \n";
+            displayDeath();
+            exit(0);
+        }
+    }
+
 };
 
-Tamagorchi::Tamagorchi() : age(0), hungerLevel(0), happinessLevel(0), isSick(false), isAsleep(true), cleanlinessLevel(10) {}
 
-int Tamagorchi::getCleanlinessLevel() {
-    return cleanlinessLevel;
-}
 
 void Tamagorchi::wakeUp() {
     std::cout << " Tama is waking up.\n";
@@ -89,12 +117,13 @@ void Tamagorchi::displayDeath() {
 
 void Tamagorchi::checkStatus() {
     std::cout << "Checking tama stats...\n";
-    std::cout << "Age: " << age << " Hunger: " << hungerLevel << " Happiness: " << happinessLevel << std::endl;
+    std::cout << "Age: " << age << " Hunger: " << hungerLevel << " Happiness: " << happinessLevel << " Cleanliness: " << cleanlinessLevel << std::endl;
     if (isSick)
         std::cout << "Tama is sick :^[ \n";
     if (isAsleep)
         std::cout << "Tama is asleep \n";
 }
+
 
 void Tamagorchi::performAction(Action action) {
     switch (action) {
@@ -215,26 +244,31 @@ int main() {
 
     Tamagorchi myTamagorchi;
     myTamagorchi.wakeUp();
-    myTamagorchi.checkStatus();
 
-    int choice;
-    std::cin >> choice;
+    std::string tamaName;
+    std::cout << "please enter a name for your tama: ";
+    std::cin >> tamaName;
+
+    myTamagorchi.setName(tamaName);
     int day = 1;
     int hour = 0;
+    bool exitReq = false;
 
-    for (int hour = 0; hour < 24; hour++) {
+   // for (int hour = 0; hour < 24; hour++) 
+    while (!exitReq) {
+        myTamagorchi.checkStatus();
         if (hour >= 0 && hour < 2) {
 
             std::cout << "Morning actions available. Choose an action:\n";
-            std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n5. Clean up 6. Give medicine 7. Give attention 8.Go to sleep";
+            std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n5. Clean up \n6. Give medicine \n7. Give attention \n8. Go to sleep\n";
         }
         else if (hour >= 2 && hour < 4) {
             std::cout << "Afternoon actions available. Choose an action:\n";
-            std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n5. Clean up 6. Give medicine 7. Give attention 8.Go to sleep";
+            std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n5. Clean up \n6. Give medicine \n7. Give attention \n8. Go to sleep\n";
         }
         else if (hour >= 4 && hour < 6) {
             std::cout << "Evening actions available. Choose an action:\n";
-            std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n5. Clean up 6. Give medicine 7. Give attention 8.Go to sleep";
+            std::cout << "1. Feed\n2. Play\n3. Walk\n4. Teach Tricks\n5. Clean up \n6. Give medicine \n7. Give attention \n8. Go to sleep\n";
         }
         else if (hour >= 6 && hour < 8) {
             std::cout << "Midnight. Choose an action:\n";
@@ -242,11 +276,13 @@ int main() {
         }
 
         myTamagorchi.handleRandomPoop();
-        if (myTamagorchi.cleanlinessLevel <= 0) {
+
+        if (myTamagorchi.getCleanlinessLevel() <= 0) {
             myTamagorchi.displayDeath();
             std::cout << "Tama died due to neglect.\n";
             exit(0);
         }
+
         int choice;
         std::cin >> choice;
 
@@ -286,6 +322,7 @@ int main() {
             break;
         case 0:
             std::cout << "Exiting...\n";
+            exitReq = true;
             break;
         default:
             std::cout << "Invalid choice. Tama is upset.\n";
@@ -296,6 +333,7 @@ int main() {
         std::cout << "Hour: " << hour << std::endl;
         myTamagorchi.handleSeepingTime(hour);
 
+        hour = (hour + 1) % 24;
     }
     return 0;
 }
