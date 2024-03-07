@@ -26,10 +26,40 @@ enum class Action {
     WALK,
     TEACH_TRICKS,
     CLEAN_UP,
+    CLEAN_POOP,
     GIVE_MEDICINE,
     ATTEND_TO_ATTENTION,
     GO_TO_SLEEP
 };
+
+
+class Display {
+public:
+    static void displayTamaAppearance() {
+        std::cout << "  __ __" << std::endl;
+        std::cout << " ( o o )" << std::endl;
+        std::cout << "/|\\(^)/|\\ " << std::endl;
+        std::cout << "  |   |" << std::endl;
+        std::cout << " (_____) " << std::endl;
+    }
+
+    static void displayPoopDroppings() {
+        std::cout << " Poop! " << std::endl;
+    }
+
+    static void displayRandomEvent(const std::string& event) {
+        std::cout << "wah " << event << " woh" << std::endl;
+    }
+
+    static void displayFood(const std::string& food) {
+        std::cout << "boo " << food << " ger" << std::endl;
+    }
+
+    static void displaySleepingTama() {
+        std::cout << "Zzzz... zZz" << std::endl;
+    }
+};
+
 
 class Tamagorchi {
 private:
@@ -44,12 +74,9 @@ private:
 
 
 public:
-    Tamagorchi() : age(0), hungerLevel(0), happinessLevel(0), isSick(false), isAsleep(true), cleanlinessLevel(10) {}
+    Tamagorchi() : age(0), hungerLevel(0), happinessLevel(0), isSick(false), isAsleep(true), cleanlinessLevel(10), cleanUpFailures(0), uncleanedPoops(0) {}
 
     bool isAsleep;
-
-
-    Tamagorchi();
     void wakeUp();
     void performAction(Action action);
     void checkStatus();
@@ -171,6 +198,9 @@ void Tamagorchi::performAction(Action action) {
             std::cout << "Tama is already asleep \n";
         }
         break;
+    case Action::CLEAN_POOP:
+        cleanUpPoop();
+        break;
     default:
         std::cout << "Invalid action.";
         break;
@@ -233,6 +263,7 @@ void Tamagorchi::handleRandomPoop() {
     int randomEvent = rand() % 10;
 
     if (randomEvent == 0) {
+        Display::displayPoopDroppings();
         std::cout << "oh no! tama poop \n";
         cleanlinessLevel -= 2;
 
@@ -283,7 +314,7 @@ int main() {
             exit(0);
         }
 
-        int choice;
+        int choice= 0;
         std::cin >> choice;
 
         switch (choice) {
@@ -303,12 +334,14 @@ int main() {
             myTamagorchi.performAction(Action::CLEAN_UP);
             break;
         case 6:
+            myTamagorchi.performAction(Action::CLEAN_POOP);
+        case 7:
             myTamagorchi.performAction(Action::GIVE_MEDICINE);
             break;
-        case 7:
+        case 8:
             myTamagorchi.performAction(Action::ATTEND_TO_ATTENTION);
             break;
-        case 8:
+        case 9:
             if (hour >= 6 && hour < 7) {
                 myTamagorchi.performAction(Action::GO_TO_SLEEP);
                 system("cls || clear");
