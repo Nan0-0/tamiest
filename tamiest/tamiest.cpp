@@ -5,6 +5,7 @@
 #include <chrono> 
 #include <cstdlib>
 #include <string>
+#include <vector>
 
 enum class Mood {
     SAD,
@@ -33,33 +34,6 @@ enum class Action {
 };
 
 
-class Display {
-public:
-    static void displayTamaAppearance() {
-        std::cout << "  __ __" << std::endl;
-        std::cout << " ( o o )" << std::endl;
-        std::cout << "/|\\(^)/|\\ " << std::endl;
-        std::cout << "  |   |" << std::endl;
-        std::cout << " (_____) " << std::endl;
-    }
-
-    static void displayPoopDroppings() {
-        std::cout << " Poop! " << std::endl;
-    }
-
-    static void displayRandomEvent(const std::string& event) {
-        std::cout << "wah " << event << " woh" << std::endl;
-    }
-
-    static void displayFood(const std::string& food) {
-        std::cout << "boo " << food << " ger" << std::endl;
-    }
-
-    static void displaySleepingTama() {
-        std::cout << "Zzzz... zZz" << std::endl;
-    }
-};
-
 
 class Tamagorchi {
 private:
@@ -68,13 +42,13 @@ private:
     int happinessLevel;
     bool isSick;
     int cleanlinessLevel;
-    int cleanUpFailures; 
+    int cleanUpFailures;
     std::string name;
-    int uncleanedPoops;
-
+    int uncleanedPoopsCount;
+    std::vector <std::string> uncleanedPoops;
 
 public:
-    Tamagorchi() : age(0), hungerLevel(0), happinessLevel(0), isSick(false), isAsleep(true), cleanlinessLevel(10), cleanUpFailures(0), uncleanedPoops(0) {}
+    Tamagorchi() : age(0), hungerLevel(0), happinessLevel(0), isSick(false), isAsleep(true), cleanlinessLevel(10), cleanUpFailures(0), uncleanedPoopsCount(0) {}
 
     bool isAsleep;
     void wakeUp();
@@ -88,36 +62,48 @@ public:
     void displayDeath();
     void handleSeepingTime(int hour);
     void sleep();
-    int getCleanlinessLevel() const {
-        return cleanlinessLevel;
-    }
-
-    void setName(const std::string& newName) {
-        name = newName;
-    }
-
-    void cleanUpPoop() {
-        cleanlinessLevel += 2;
-        uncleanedPoops = 0;
-    }
-
-    void poopLeftUncleaned() {
-        uncleanedPoops++;
-        if (uncleanedPoops >= 5) {
-            isSick = true;
-            std::cout << "Tama is sick due to uncleaned poop! \n";
-
-        }
-
-        if (uncleanedPoops >= 10) {
-            std::cout << "Tama died due to neglect. \n";
-            displayDeath();
-            exit(0);
-        }
-    }
+    int getCleanlinessLevel() const;
+    void setName(const std::string& newName);
+    void cleanUpPoop();
+    void poopLeftUncleaned();
+    void displayUncleanedPoops();
+    void addPoop();
 
 };
 
+void Tamagorchi:: setName(const std::string& newName) {
+    name = newName;
+}
+
+
+void Tamagorchi:: cleanUpPoop() {
+    uncleanedPoops.clear();
+    cleanlinessLevel += 2;
+    uncleanedPoopsCount = 0;
+}
+
+void Tamagorchi:: poopLeftUncleaned() {
+    uncleanedPoopsCount++;
+    if (uncleanedPoopsCount >= 5) {
+        isSick = true;
+        std::cout << "Tama is sick due to uncleaned poop! \n";
+    }
+
+    if (uncleanedPoopsCount >= 10) {
+        std::cout << "Tama died due to neglect. \n";
+        displayDeath();
+        exit(0);
+    }
+} 
+void Tamagorchi::displayUncleanedPoops() {
+    for (const auto& poop : uncleanedPoops) {
+        std::cout << poop << std::endl;
+    }
+}
+
+void Tamagorchi::addPoop() {
+    uncleanedPoops.push_back("Poop!");
+} 
 
 
 void Tamagorchi::wakeUp() {
@@ -128,6 +114,11 @@ void Tamagorchi::wakeUp() {
 void Tamagorchi::sleep() {
     std::cout << "Tama is going to sleep...\n";
     isAsleep = true;
+}
+
+int Tamagorchi::getCleanlinessLevel() const
+{
+    return 0;
 }
 
 void Tamagorchi::handleSeepingTime(int hour) {
@@ -144,7 +135,7 @@ void Tamagorchi::displayDeath() {
 
 void Tamagorchi::checkStatus() {
     std::cout << "Checking tama stats...\n";
-    std::cout << "Age: " << age << " Hunger: " << hungerLevel << " Happiness: " << happinessLevel << " Cleanliness: " << cleanlinessLevel << std::endl;
+    std::cout << "Age: " << age << " Hunger: " << hungerLevel << " Happiness: " << happinessLevel << " Cleanliness: " << cleanlinessLevel;
     if (isSick)
         std::cout << "Tama is sick :^[ \n";
     if (isAsleep)
@@ -260,13 +251,12 @@ void Tamagorchi::handleRandomEvent() {
 
 void Tamagorchi::handleRandomPoop() {
     srand(time(0));
-    int randomEvent = rand() % 10;
+    int randomEvent = rand() % 2;
 
     if (randomEvent == 0) {
-        Display::displayPoopDroppings();
         std::cout << "oh no! tama poop \n";
         cleanlinessLevel -= 2;
-
+        addPoop();
     }
 }
 
@@ -285,9 +275,14 @@ int main() {
     int hour = 0;
     bool exitReq = false;
 
-   // for (int hour = 0; hour < 24; hour++) 
     while (!exitReq) {
         myTamagorchi.checkStatus();
+        std::cout << "\n\n";
+        myTamagorchi.handleRandomPoop();
+        std::cout << "\n\n";
+        myTamagorchi.handleRandomEvent();
+        std::cout << "\n\n";
+
         if (hour >= 0 && hour < 2) {
 
             std::cout << "Morning actions available. Choose an action:\n";
@@ -335,6 +330,7 @@ int main() {
             break;
         case 6:
             myTamagorchi.performAction(Action::CLEAN_POOP);
+            break;
         case 7:
             myTamagorchi.performAction(Action::GIVE_MEDICINE);
             break;
@@ -350,6 +346,8 @@ int main() {
                 day++;
                 hour = 0;
                 std::cout << "Day " << day << " . It's a new day! \n";
+
+                myTamagorchi.isAsleep = false;
                 break;
             }
             break;

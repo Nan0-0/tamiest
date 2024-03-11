@@ -1,4 +1,4 @@
 ﻿  tamiest.cpp
-C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(243,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(262,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(234,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\nayni\Desktop\tamiest\tamiest\tamiest\tamiest.cpp(253,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   tamiest.vcxproj -> C:\Users\nayni\Desktop\tamiest\tamiest\x64\Debug\tamiest.exe
